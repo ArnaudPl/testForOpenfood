@@ -24,7 +24,9 @@
 </head>
 
 <body>
-    <input type="file" accept="image/*;capture=camera">
+    <form method="get">
+        <input id="file" type="file" accept="image/*;capture=camera">
+    </form>
     <!--
     <video autoplay></video>
 
@@ -71,6 +73,12 @@
         });
     </script>
     -->
+
+    <script>
+    document.getElementById("file").onchange = function() {
+        document.getElementById("form").submit();
+    };
+    </script>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
