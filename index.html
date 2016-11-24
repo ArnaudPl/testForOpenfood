@@ -15,9 +15,47 @@
       rel="stylesheet">
 
     <style>
-        video {
-            width: 100%;
-            height: 100%;
+        /* Hide the file input --> hard to style it */
+        .lets-take-a-photo {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .lets-take-a-photo + .lets-take-a-photo-label {
+            width: 64px;
+            height: 64px;
+
+            text-align: center;
+            background: #DDD;
+            border-radius: 99px;
+            box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.6);
+
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+
+            cursor: pointer;
+        }
+
+        .lets-take-a-photo + .lets-take-a-photo-label:hover {
+            box-shadow: 4px 4px 5px 0px rgba(50, 50, 50, 0.6);
+        }
+
+        .lets-take-a-photo-label img {
+            width: auto;
+            height: 32px;
+
+            padding-top: 16px;
+        }
+
+        i.material-icons {
+            color: white;
+            font-size: 32px;
+            line-height: 64px;
         }
     </style>
 
@@ -25,54 +63,12 @@
 
 <body>
     <form method="get" id="form" action="#">
-        <input id="file" type="file" accept="image/*;capture=camera">
+        <input id="barcode" type="file" name="barcode" accept="image/*;capture=camera" class="lets-take-a-photo">
+        <label for="barcode" class="lets-take-a-photo-label">
+            <img src="barcode.png" alt="Scan a barcode">
+            <!--<i class="material-icons">menu</i>-->
+        </label>
     </form>
-    <!--
-    <video autoplay></video>
-
-    <script>
-
-        // Older browsers might not implement mediaDevices at all, so we set an empty object first
-        if (navigator.mediaDevices === undefined) {
-          navigator.mediaDevices = {};
-        }
-
-        // Some browsers partially implement mediaDevices. We can't just assign an object
-        // with getUserMedia as it would overwrite existing properties.
-        // Here, we will just add the getUserMedia property if it's missing.
-        if (navigator.mediaDevices.getUserMedia === undefined) {
-          navigator.mediaDevices.getUserMedia = function(constraints) {
-
-            // First get ahold of the legacy getUserMedia, if present
-            var getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia);
-
-            // Some browsers just don't implement it - return a rejected promise with an error
-            // to keep a consistent interface
-            if (!getUserMedia) {
-              return Promise.reject(new Error('getUserMedia is not implemented in this browser.'));
-            }
-
-            // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
-            return new Promise(function(resolve, reject) {
-              getUserMedia.call(navigator, constraints, resolve, reject);
-            });
-          }
-        }
-
-        navigator.mediaDevices.getUserMedia({ audio: false, video: { facingMode: "environment" } })
-        .then(function(stream) {
-          var video = document.querySelector('video');
-          // Older browsers may not have srcObject
-          video.src = window.URL.createObjectURL(stream);
-          video.onloadedmetadata = function(e) {
-            video.play();
-          };
-        })
-        .catch(function(err) {
-          console.log(err.name + ": " + err.message);
-        });
-    </script>
-    -->
 
     <script>
     document.getElementById("file").onchange = function() {
